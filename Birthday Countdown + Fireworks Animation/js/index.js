@@ -59,10 +59,10 @@ function submitDate(e){
   }
 
 
-    checkPastOrFuture(str[0], str[1]);
+    checkPastOrFuture(str[0], str[1],str[2]);
 
     modalbox.style.display = 'none';
-    
+
 
   // console.log(now)
   console.log(`this is ${birthday}`);
@@ -73,7 +73,7 @@ function submitDate(e){
 modalbox.addEventListener('keyup', e =>{
   if(e.key === 'Enter'){
     submitDate();
-  } 
+  }
 
   console.log(e.key);
 })
@@ -91,14 +91,14 @@ let interval = setInterval(() => {
         minutes = seconds * 60,
         hours = minutes * 60,
         days = hours * 24;
-  
+
   // console.log(date);
-  
+
   let countDown = date.getTime();
   let now = new Date().getTime();
-    
+
   distanceOfTime =   countDown - now;
-    
+
 
     day.textContent = Math.floor(distanceOfTime /  (days))
     hour.textContent = Math.floor((distanceOfTime %  (days))  / (hours));
@@ -117,20 +117,20 @@ let interval = setInterval(() => {
       happyContainer.style.display = 'none';
     }
 
-    
+
 }, 0);
 
 
 
 settingIcon.addEventListener("click", () =>{
   const styleModalbox = getComputedStyle(modalbox);
-   
+
   (styleModalbox.display === 'none') ? modalbox.style.display  = "flex" : modalbox.style.display  = "none";
 
   birthdayInput.focus()
-  
 
-  
+
+
 })
 
 
@@ -140,7 +140,8 @@ settingIcon.addEventListener("click", () =>{
 
 /**For checking the date is in the past or in the future and do something when either one happen*/
 function checkPastOrFuture(date, month, year){
-  const data = new Date(date + ' ' +  month + ' ' + new Date().getFullYear()).setHours(0, 0, 0, 0);
+//  const data = new Date(date + ' ' +  month + ' ' + new Date().getFullYear()).setHours(0, 0, 0, 0);
+  const data = new Date(date + ' ' +  month + ' ' + year).setHours(0, 0, 0, 0);
 
   const now = new Date().setHours(0, 0, 0, 0);
 
@@ -148,17 +149,28 @@ function checkPastOrFuture(date, month, year){
 
   console.log(date + ' ' +  month + ' ' + new Date().getFullYear())
   console.log(new Date(date + ' ' +  month + ' ' + new Date().getFullYear()))
+  console.log('data:'+data)
+  console.log('now:'+now)
+  console.log('date:'+date)
+  console.log('month:'+month)
+  console.log('year:'+year)
+  console.log('new Date().getFullYear():'+new Date().getFullYear())
 
   if(data  < now){
     console.log('past')
     birthday = `${date} ${month} ${oneYearFromNow.getFullYear()} 00:00:00`;
     subline.textContent =  `From this day until ${date} ${month} ${oneYearFromNow.getFullYear()}`;
 
-    
-  }else if(data <= lastDateInThisYear){
+
+  }else{
+      console.log('_______________________________')
+      console.log('not until last date')
+      birthday = `${date} ${month} ${year} 00:00:00`;
+      subline.textContent  = `From this day until ${date} ${month} ${year}`;
+  } /*if(data <= lastDateInThisYear){
     console.log('_______________________________')
     console.log('not until last date')
     birthday = `${date} ${month} ${new Date().getFullYear()} 00:00:00`;
     subline.textContent  = `From this day until ${date} ${month} ${new Date().getFullYear()}`;
-  }
+  }*/
 }
